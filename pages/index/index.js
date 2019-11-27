@@ -1,54 +1,114 @@
-//index.js
-//获取应用实例
-const app = getApp()
+const newsVac = {
+  '国内': 'gn',
+  '国际': 'gj',
+  '财经': 'cj',
+  '娱乐': 'yl',
+  '军事': 'js',
+  '体育': 'ty',
+  '其他': 'other',
+}
 
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+    data: {
+      list: ['国内', '国际', '财经', '娱乐', '军事', '体育', '其他'],
+      idx: 0,
+      id: [],
+      nowResult_title: '',
+      nowRresult_date: '',
+      nowResult_firstImage: '',
+      nowResult_id: '',
+      nowResult_source: '',
+      newsType: 'gn',
+      //result: '',
+      result_date: '',
+      result_firstImage: '',
+      result_id: '',
+      result_source: '',
+      result_title: '',
+
+    },
+
+    onPullDownRefresh() {
+      //console.log("refresh executed!")
+      this.getNow(() => {
+        wx.stopPullDownRefresh()
       })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
+    },
+
+
+    onLoad() {
+      this.getNow(newsVac['国内'], '')
+    },
+
+    getNow(type, callback) {
+
+      wx.request({
+        url: 'https://test-miniprogram.com/api/news/list',
+        data: {
+          type: type
+        },
         success: res => {
-          app.globalData.userInfo = res.userInfo
+
+          let result = res.data.result
+          let result_date = res.data.result[0].date
+          let result_firstImage = res.data.result[0].firstImage
+          let result_id = res.data.result[0].id
+          let result_source = res.data.result[0].source
+          let result_title = res.data.result[0].title
+
           this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+            nowResult_title: result_title,
+            nowResult_source: result_source,
+            nowResult_date: result_date,
+            nowResult_firstImage: result_firstImage
           })
+          /*let allnews_list= []
+          for (let i = 1; i < this.data.news[titleType].length; i++) {
+            [allnews-list].push({
+              id: this.data.news[titleType][i].id,
+              newsText: this.data.news[titleType][i].title,
+              newsPicturePath: this.data.news[titleType][i].firstImage,
+              newsSource: this.data.news[titleType][i].source,
+              newsTime: this.data.news[titleType][i].date)
+            }
+          
+          this.setData({
+            newsNow: newsNow,
+          })
+          */
+
+        },
+        complete: () => {
+          callback && callback()
         }
       })
+    },
+    /*onTapNewslist(e) {
+      //wx.showToast()
+      let id = e.currentTarget.id
+      //console.log('显示e', e)
+      console.log('显示id', id)
+      let newsType = newsVac[e.currentTarget.id]
+      console.log('显示newsType', newsType)
+      }
+      */
+
+    onTapNewslist(e) {
+      wx.showToast({
+        title: 'reloading',
+      })
+      let newsType = newsVac[e.currentTarget.id]
+      this.getNow(newsType)
+      this.setData({
+        newsType: newsType,
+      })
     }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+
+
+
+
+
   }
-})
+
+
+)
