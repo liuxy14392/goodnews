@@ -1,6 +1,6 @@
 <scroll-view scroll-x>
   <view class='news-list'>
-    <view class='news-item' wx:for="{{list}}" wx:key="{{index}}"  bindtap='onTapNewslist' id="{{item}}">{{item}} </view>
+    <view class='news-item' wx:for="{{list}}" wx:key="{{index}}" bindtap='onTapNewslist' id="{{item}}">{{item}} </view>
   </view>
 </scroll-view>
 
@@ -9,22 +9,22 @@
   <image class="news-bg" src="{{nowResult_firstImage}}" mode="scaleToFill"></image>
   <view class="news-title">{{nowResult_title}}</view>
   <view class="hotnews" bindtap='{{wxs.tapName}}'>
-    <view class="news-src-text">{{nowRresult_source}}</view>
-    <view class="news-time-text">{{nowRresult_date}}</view>
+    <view class="news-src-text">{{nowResult_source}}</view>
+    <view class="news-time-text">{{nowResult_date}}</view>
   </view>
 </view>
 
 
 <view class='allnews_list'>
-  <view class="allnews_item" wx:for="{{[1,2,3,4,5,6,7]}}"
-  wx:key="{{id}}"  bindtap='onTapNewslist' newsId="{{id}}">{{item}}
-    <view class='allnews_info_wrapper'>
-      <view class='allnews_title'>{{nowResult_title}}</view>
+  <view class="allnews_item" wx:for="{{allnews}}" wx:key="id">
+    <view class='allnews_info_wrapper' bindtap='onTapDetails' id="{{item.id}}">
+      <view class='allnews_title'>{{item.allnewsTitle}}</view>
       <view class='allnews_info'>
-        <view class='allnews_source'>{{nowResult_source}}</view>
-        <view class='allnews_date'>{{nowResult_date}}</view>
+        <view class='allnews_source'>{{item.allnewsSource}}</view>
+        <view class='allnews_date'>{{item.allnewsDate}}</view>
       </view>
     </view>
-    <image class='allnews_image' src='{{nowResult_firstImage}}'></image>
+    <image class='allnews_image' src='{{item.allnewsImage}}'      
+  mode="scaleToFill"></image>
   </view>
 </view>

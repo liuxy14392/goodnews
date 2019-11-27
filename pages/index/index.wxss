@@ -59,6 +59,7 @@
 }
 
 .allnews_list {
+  position: relative;
   margin-top: 20rpx;
 }
 
@@ -74,8 +75,8 @@
 }
 
 .allnews_info{
-  display: flex;
   
+  display: flex;
   padding-left: 30rpx;
 }
 .allnews_source {
@@ -92,7 +93,9 @@
 }
 
 .allnews_image {
+  
   padding-top: 10rpx;
+  padding-left: 25rpx;
   padding-right: 15rpx;
   width: 250rpx;
   height: 180rpx;

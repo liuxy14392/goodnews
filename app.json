@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/list/list"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -8,7 +9,6 @@
     "navigationBarTitleText": "今日热点",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
-  
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
